@@ -1,4 +1,4 @@
-# dojo.bot
+# swarm-bot
 
 The Dojo have the following robot:
 
