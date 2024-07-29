@@ -32,7 +32,7 @@
  * @brief Hostname of the ESP32
  * 
  */
-#define ESP32_HOSTNAME "SBR_ESP32_Manager"
+#define ESP32_HOSTNAME "OMNI_ESP32_Manager"
 
 
 // ========================== NODE ESP32s =====================

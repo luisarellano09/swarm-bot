@@ -24,6 +24,7 @@ Omnidirectional Robot.
 | 3         | [1,77 Zoll SPI TFT Display 128x160 Pixel ST7735](https://www.amazon.de/gp/product/B078JBBPXK/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1)  |
 | 1 Pack    | [3 x 8-way power distributor with connectors](https://www.amazon.de/gp/product/B0C1CT1YFM/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&th=1)  |
 | 1 Pack    | [2 Sets Servo Mount 2 DOF Steering Wheel Swivel and Tilt Mount](https://www.amazon.de/gp/product/B07PQ12TXS/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1)  |
+| 1         | [1x32 Canal Robot Servo](https://de.aliexpress.com/item/1005005799854896.html?spm=a2g0o.order_list.order_list_main.22.43795c5f5yyrHC&gatewayAdapt=glo2deu)  |
 | 1         | Hyperion G5 50C 4S 5000mAh LiPo Battery  |
 | 1         | [Turnigy Graphene Panther 6000mAh 4S 75C Battery Pack w/XT90](https://hobbyking.com/en_us/turnigy-graphene-6000mah-4s-75c-lipo-pack-w-xt90.html)  |
 | 1         | [Turnigy Reaktor T240 (EU Plug) AC/DC 10A 2 x 150W Touch Screen Charger](https://hobbyking.com/en_us/turnigy-reaktor-t240-eu-plug-ac-dc-10a-2-x-150w-touch-screen-charger.html)  |
