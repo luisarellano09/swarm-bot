@@ -244,7 +244,10 @@ RC_e WifiManager::ConfigureOTA(){
     ArduinoOTA.setHostname(this->m_hostName.c_str());
 
     // Set OTA Port
-    ArduinoOTA.setPort(8080);
+    ArduinoOTA.setPort(3232);
+
+    // Set Timeout to 10 seconds
+    ArduinoOTA.setTimeout(10000);
    
     ArduinoOTA
     .onStart([]() {
