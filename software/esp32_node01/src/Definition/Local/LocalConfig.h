@@ -84,25 +84,25 @@
  * @brief GPIO to control the direction of the Motor 03
  * 
  */
-#define MOTOR_03_DIR_GPIO 18
+#define MOTOR_03_DIR_GPIO 27
 
 /**
  * @brief PWM GPIO of the Motor 03
  * 
  */
-#define MOTOR_03_PWM_GPIO 12
+#define MOTOR_03_PWM_GPIO 26
 
 /**
  * @brief GPIO to control the direction of the Motor 04
  * 
  */
-#define MOTOR_04_DIR_GPIO 27
+#define MOTOR_04_DIR_GPIO 18
 
 /**
  * @brief PWM GPIO of the Motor 04
  * 
  */
-#define MOTOR_04_PWM_GPIO 26
+#define MOTOR_04_PWM_GPIO 12
 
 /**
  * @brief Motor PWM Frequency
@@ -126,7 +126,7 @@
  * @brief Motor 02 Offset
  * 
  */
-#define MOTOR_02_OFFSET (double) 3.0
+#define MOTOR_02_OFFSET (double) 0.0
 
 /**
  * @brief Motor 03 Offset
@@ -146,49 +146,49 @@
  * @brief GPIO of the Channel A of Encoder 01
  * 
  */
-#define ENCODER_01_CHANNEL_A_GPIO 34
+#define ENCODER_01_CHANNEL_A_GPIO 32
 
 /**
  * @brief GPIO of the Channel B of Encoder 01
  * 
  */
-#define ENCODER_01_CHANNEL_B_GPIO 35
+#define ENCODER_01_CHANNEL_B_GPIO 13
 
 /**
  * @brief GPIO of the Channel A of Encoder 02
  * 
  */
-#define ENCODER_02_CHANNEL_A_GPIO 23
+#define ENCODER_02_CHANNEL_A_GPIO 25
 
 /**
  * @brief GPIO of the Channel B of Encoder 02
  * 
  */
-#define ENCODER_02_CHANNEL_B_GPIO 22
+#define ENCODER_02_CHANNEL_B_GPIO 14
 
 /**
  * @brief GPIO of the Channel A of Encoder 03
  * 
  */
-#define ENCODER_03_CHANNEL_A_GPIO 32
+#define ENCODER_03_CHANNEL_A_GPIO 34
 
 /**
  * @brief GPIO of the Channel B of Encoder 03
  * 
  */
-#define ENCODER_03_CHANNEL_B_GPIO 13
+#define ENCODER_03_CHANNEL_B_GPIO 35
 
 /**
  * @brief GPIO of the Channel A of Encoder 04
  * 
  */
-#define ENCODER_04_CHANNEL_A_GPIO 25
+#define ENCODER_04_CHANNEL_A_GPIO 23
 
 /**
  * @brief GPIO of the Channel B of Encoder 04
  * 
  */
-#define ENCODER_04_CHANNEL_B_GPIO 14
+#define ENCODER_04_CHANNEL_B_GPIO 22
 
 
 // ========================== ODOMETRY =====================

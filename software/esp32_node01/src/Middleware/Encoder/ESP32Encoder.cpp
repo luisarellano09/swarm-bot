@@ -23,7 +23,7 @@ static portMUX_TYPE spinlock = portMUX_INITIALIZER_UNLOCKED;
 //static ESP32Encoder *gpio2enc[48];
 //
 //
-enum puType ESP32Encoder::useInternalWeakPullResistors=DOWN;
+enum puType ESP32Encoder::useInternalWeakPullResistors=UP;
 uint32_t ESP32Encoder::isrServiceCpuCore = ISR_CORE_USE_DEFAULT;
 ESP32Encoder *ESP32Encoder::encoders[MAX_ESP32_ENCODERS] = { NULL, };
 
