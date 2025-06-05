@@ -210,8 +210,8 @@
 #define TFT_SCLK 23  // SCK
 #define TFT_MOSI 22  // SDA
 #define TFT_RST  15  // RES
-#define TFT_DC   2  // RS
-#define TFT_CS   4  // CS
+#define TFT_DC   2   // RS
+#define TFT_CS   -1  // CS
 
 // For ESP32 Dev board (only tested with ILI9341 display)
 // The hardware SPI can be mapped to any pins
