@@ -24,7 +24,7 @@ Manager::Manager(){
     Log.traceln("[Manager::Manager] WifiManager instanced");
 
     // Node - Communication Bus
-    this->m_nodeESP32 = new NodeEsp32(&Serial1, NODE_ESP32s_BAUDRATE, NODE_ESP32s_RX, NODE_ESP32s_TX);
+    this->m_nodeESP32 = new NodeEsp32(&Serial1, NODE_ESP32s_BAUDRATE, NODE_ESP32s_RX_GPIO, NODE_ESP32s_TX_GPIO);
     Log.traceln("[Manager::Manager] NodeEsp32 instanced");
 
     // TFT
@@ -36,7 +36,7 @@ Manager::Manager(){
     Log.traceln("[Manager::Manager] IMU instanced");
 
     // Servo Controller
-    this->m_servoController = new ServoController(&Serial2, SERVO_CONTROLLER_BAUDRATE, SERVO_CONTROLLER_RX, SERVO_CONTROLLER_TX);
+    this->m_servoController = new ServoController(&Serial2, SERVO_CONTROLLER_BAUDRATE, SERVO_CONTROLLER_RX_GPIO, SERVO_CONTROLLER_TX_GPIO);
     Log.traceln("[Manager::Manager] ServoController instanced");
 
     // Start Node 
