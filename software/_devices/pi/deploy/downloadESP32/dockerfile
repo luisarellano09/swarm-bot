@@ -19,4 +19,5 @@ ENTRYPOINT [ "bash", "-c", "\
   pio run && \
   BIN=$(find .pio/build -name firmware.bin | head -n1) && \
   python /opt/esp32-tools/espota.py --ip \"$ESP32_HOST\" --port \"${OTA_PORT:-3232}\" --file \"$BIN\" \
+  sudo rm -rf .pio/build \
 "]
