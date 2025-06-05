@@ -25,17 +25,17 @@ jobs:
           echo "changed_node01=false" >> $GITHUB_OUTPUT
           echo "changed_node02=false" >> $GITHUB_OUTPUT
 
-          if echo "$changed_files" | grep -q '^esp32_node01/'; then
+          if echo "$changed_files" | grep -q '^software/esp32_node01/'; then
             echo "changed_node01=true" >> $GITHUB_OUTPUT
           fi
-          if echo "$changed_files" | grep -q '^esp32_node02/'; then
+          if echo "$changed_files" | grep -q '^software/esp32_node02/'; then
             echo "changed_node02=true" >> $GITHUB_OUTPUT
           fi
 
   build_upload_node01:
     needs: detect_changes
     if: needs.detect_changes.outputs.changed_node01 == 'true'
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, pi]
     steps:
       - uses: actions/checkout@v3
       - name: Build & Upload esp32_node01
@@ -44,7 +44,7 @@ jobs:
   build_upload_node02:
     needs: detect_changes
     if: needs.detect_changes.outputs.changed_node02 == 'true'
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, pi]
     steps:
       - uses: actions/checkout@v3
       - name: Build & Upload esp32_node02
