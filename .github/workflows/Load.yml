@@ -39,7 +39,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build & Upload esp32_node01
-        run: docker compose -f software/_devices/pi/deploy/downloadesp32/docker-compose-esp32-node01.yml up --build --abort-on-container-exit
+        run: docker compose -f software/_devices/pi/deploy/downloadESP32/docker-compose-esp32-node01.yml up --build --abort-on-container-exit
 
   build_upload_node02:
     needs: detect_changes
@@ -48,4 +48,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build & Upload esp32_node02
-        run: docker compose -f software/_devices/pi/deploy/downloadesp32/docker-compose-esp32-node02.yml up --build --abort-on-container-exit
+        run: docker compose -f software/_devices/pi/deploy/downloadESP32/docker-compose-esp32-node02.yml up --build --abort-on-container-exit
