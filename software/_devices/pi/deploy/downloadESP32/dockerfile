@@ -2,7 +2,8 @@ FROM python:3.11-slim
 
 # Install dependencies and PlatformIO in one layer
 RUN apt-get update && apt-get install -y curl git gcc unzip wget && \
-    curl -fsSL -o get-platformio.py https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py>    python3 get-platformio.py && \
+    curl -fsSL -o get-platformio.py https://raw.githubusercontent.com/platformio/platformio-core-installer/master/get-platformio.py && \
+    python3 get-platformio.py && \
     ln -s ~/.platformio/penv/bin/platformio /usr/local/bin/pio && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
