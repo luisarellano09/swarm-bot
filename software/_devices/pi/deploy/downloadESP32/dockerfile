@@ -12,8 +12,10 @@ RUN mkdir -p /opt/esp32-tools && \
     curl -fsSL -o /opt/esp32-tools/espota.py https://raw.githubusercontent.com/espressif/arduino-esp32/master/tools/espota.py && \
     chmod +x /opt/esp32-tools/espota.py
 
+ARG PROJECT_SUBDIR
+ENV PROJECT_SUBDIR=${PROJECT_SUBDIR}
 WORKDIR /project
-COPY ${PROJECT_FOLDER} /project
+COPY ${PROJECT_SUBDIR}/ /project/
 
 ENTRYPOINT [ "bash", "-c", "\
   cd /project && \
