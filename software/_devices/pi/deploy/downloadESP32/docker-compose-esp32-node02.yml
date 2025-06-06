@@ -4,7 +4,7 @@ services:
     build:
       context: .
       args:
-        PROJECT_FOLDER: ../../../../esp32_node02:/project
+        PROJECT_FOLDER: ../../../../esp32_node02
     container_name: build-ota-esp32-node02
     network_mode: "host"
     environment:
