@@ -3,10 +3,10 @@ services:
   esp32-builder:
     build:
       context: .
-      args:
-        PROJECT_FOLDER: software/esp32_node02
     container_name: build-ota-esp32-node02
     network_mode: "host"
+    volumes:
+      - ../../../../esp32_node02:/project
     environment:
       ESP32_HOST: "10.0.0.22"
       ESP32_AUTH: ""

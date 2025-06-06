@@ -32,9 +32,17 @@ jobs:
             echo "changed_node02=true" >> $GITHUB_ENV
           fi
 
+      - name: Delete esp32_node01 (if changed)
+        if: env.changed_node01 == 'true'
+        run: sudo rm software/esp32_node01/.pio/build -rf
+
       - name: Build & Upload esp32_node01 (if changed)
         if: env.changed_node01 == 'true'
         run: docker compose -f software/_devices/pi/deploy/downloadESP32/docker-compose-esp32-node01.yml up --build --abort-on-container-exit
+
+      - name: Delete esp32_node02 (if changed)
+        if: env.changed_node02 == 'true'
+        run: sudo rm software/esp32_node02/.pio/build -rf
 
       - name: Build & Upload esp32_node02 (if changed)
         if: env.changed_node02 == 'true'
