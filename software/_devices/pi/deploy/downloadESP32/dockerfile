@@ -13,6 +13,7 @@ RUN mkdir -p /opt/esp32-tools && \
     chmod +x /opt/esp32-tools/espota.py
 
 WORKDIR /project
+COPY ${PROJECT_FOLDER} /project
 
 ENTRYPOINT [ "bash", "-c", "\
   cd /project && \
