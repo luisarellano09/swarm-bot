@@ -7,45 +7,35 @@ on:
       - 'software/esp32_node02/**'
 
 jobs:
-  detect_changes:
+  build_and_upload:
     runs-on: [self-hosted, pi]
-    outputs:
-      changed_node01: ${{ steps.set_outputs.outputs.changed_node01 }}
-      changed_node02: ${{ steps.set_outputs.outputs.changed_node02 }}
 
     steps:
       - uses: actions/checkout@v3
 
       - name: Detect changed projects
-        id: set_outputs
+        id: changes
         run: |
           git fetch origin ${{ github.event.before }} --depth=1 || true
           changed_files=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }})
+          echo "changed_files<<EOF" >> $GITHUB_OUTPUT
+          echo "$changed_files" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
-          echo "changed_node01=false" >> $GITHUB_OUTPUT
-          echo "changed_node02=false" >> $GITHUB_OUTPUT
+          echo "changed_node01=false" >> $GITHUB_ENV
+          echo "changed_node02=false" >> $GITHUB_ENV
 
           if echo "$changed_files" | grep -q '^software/esp32_node01/'; then
-            echo "changed_node01=true" >> $GITHUB_OUTPUT
+            echo "changed_node01=true" >> $GITHUB_ENV
           fi
           if echo "$changed_files" | grep -q '^software/esp32_node02/'; then
-            echo "changed_node02=true" >> $GITHUB_OUTPUT
+            echo "changed_node02=true" >> $GITHUB_ENV
           fi
 
-  build_upload_node01:
-    needs: detect_changes
-    if: needs.detect_changes.outputs.changed_node01 == 'true'
-    runs-on: [self-hosted, pi]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build & Upload esp32_node01
+      - name: Build & Upload esp32_node01 (if changed)
+        if: env.changed_node01 == 'true'
         run: docker compose -f software/_devices/pi/deploy/downloadESP32/docker-compose-esp32-node01.yml up --build --abort-on-container-exit
 
-  build_upload_node02:
-    needs: detect_changes
-    if: needs.detect_changes.outputs.changed_node02 == 'true'
-    runs-on: [self-hosted, pi]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Build & Upload esp32_node02
+      - name: Build & Upload esp32_node02 (if changed)
+        if: env.changed_node02 == 'true'
         run: docker compose -f software/_devices/pi/deploy/downloadESP32/docker-compose-esp32-node02.yml up --build --abort-on-container-exit
