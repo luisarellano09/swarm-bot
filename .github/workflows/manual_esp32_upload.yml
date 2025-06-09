@@ -24,13 +24,13 @@ jobs:
         run: |
           case "${{ github.event.inputs.target }}" in
             esp32_manager)
-              echo "file=software/_devices/pi/deploy/downloadESP32/docker_compose_esp32_manager.yml" >> $GITHUB_OUTPUT
+              echo "file=software/_devices/deploy/downloadESP32/docker_compose_esp32_manager.yml" >> $GITHUB_OUTPUT
               ;;
             esp32_node01)
-              echo "file=software/_devices/pi/deploy/downloadESP32/docker_compose_esp32_node01.yml" >> $GITHUB_OUTPUT
+              echo "file=software/_devices/deploy/downloadESP32/docker_compose_esp32_node01.yml" >> $GITHUB_OUTPUT
               ;;
             esp32_node02)
-              echo "file=software/_devices/pi/deploy/downloadESP32/docker_compose_esp32_node02.yml" >> $GITHUB_OUTPUT
+              echo "file=software/_devices/deploy/downloadESP32/docker_compose_esp32_node02.yml" >> $GITHUB_OUTPUT
               ;;
           esac
 
