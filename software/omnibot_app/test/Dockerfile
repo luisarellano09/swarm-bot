@@ -3,7 +3,6 @@
 # Stage 1: Base runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
-EXPOSE 3000
 
 # Stage 2: Build environment
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build

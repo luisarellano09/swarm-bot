@@ -1,0 +1,6 @@
+@test_HostAddress = http://10.0.0.10:3000
+
+GET {{test_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

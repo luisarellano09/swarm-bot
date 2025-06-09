@@ -20,6 +20,8 @@ services:
         build:
             context: ../../../omnibot_app
             dockerfile: test/Dockerfile
+        ports:
+            - 3000:8080
         networks:
             - omnibot_net_internal
             - omnibot_net_external
