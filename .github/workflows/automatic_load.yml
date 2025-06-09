@@ -3,7 +3,9 @@ name: Automatic Deploy
 on:
   push:
     paths:
-      - 'software/**'
+      - 'software/esp32_manager/**'
+      - 'software/esp32_node01/**'
+      - 'software/esp32_node02/**'
 
 jobs:
   detect_changes:

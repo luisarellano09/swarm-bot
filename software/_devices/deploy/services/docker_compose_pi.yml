@@ -20,6 +20,9 @@ services:
         build:
             context: ../../../omnibot_app
             dockerfile: test/Dockerfile
+            arg:
+                #BUILD_CONFIGURATION: Release
+                BUILD_CONFIGURATION: Debug
         ports:
             - 3000:8080
         networks:
