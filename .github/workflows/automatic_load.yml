@@ -1,4 +1,4 @@
-name: ESP32 OTA Build and Upload
+name: Automatic Deploy
 
 on:
   push:
