@@ -128,7 +128,7 @@
 #define TFT_RST_GPIO  15  // RES
 
 /** 
- * @brief TFT SPI DC
+ * @brief TFT SPI RS
  */
 #define TFT_DC_GPIO   2   // RS
 

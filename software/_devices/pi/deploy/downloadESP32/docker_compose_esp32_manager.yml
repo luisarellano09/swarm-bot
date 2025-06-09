@@ -3,12 +3,12 @@ services:
   esp32-builder:
     build:
       context: .
-    container_name: build-ota-esp32-node01
+    container_name: build_ota_esp32_manager
     network_mode: "host"
     volumes:
-      - ../../../../esp32_node01/:/project
+      - ../../../../build_ota_esp32_manager/:/project
     environment:
-      ESP32_HOST: "10.0.0.21"
+      ESP32_HOST: "10.0.0.20"
       ESP32_AUTH: ""
       OTA_PORT: "3232"
     restart: "no"
