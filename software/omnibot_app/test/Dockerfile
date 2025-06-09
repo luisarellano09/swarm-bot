@@ -1,5 +1,6 @@
 # Stage 1: Base runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /app
 
 # Stage 2: Build environment
@@ -7,18 +8,19 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
-# Copy solution and project files for faster caching
+# Copy solution and project files for cache efficiency
 COPY ../omnibot_app.sln ./
 COPY ../test/test.csproj ./test/
 
-# If there are other projects with dependencies, include them too
-# COPY ../SomeLib/SomeLib.csproj ./SomeLib/
-
-# Restore using the solution (faster rebuild if deps didn't change)
+# Restore only
 RUN dotnet restore omnibot_app.sln
 
-# Copy the rest of the source code
+# Copy the entire source tree
 COPY .. .
+
+# Build the project
+WORKDIR /src/test
+RUN dotnet build test.csproj -c $BUILD_CONFIGURATION -o /app/build --no-restore
 
 # Stage 3: Publish (includes condition for debug symbols)
 FROM build AS publish
