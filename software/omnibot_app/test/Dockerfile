@@ -20,17 +20,26 @@ RUN dotnet restore omnibot_app.sln
 # Copy the rest of the source code
 COPY .. .
 
-# Build only the target project
-WORKDIR /src/test
-RUN dotnet build test.csproj -c $BUILD_CONFIGURATION -o /app/build
-
-# Stage 3: Publish
+# Stage 3: Publish (includes condition for debug symbols)
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish test.csproj -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish test.csproj -c $BUILD_CONFIGURATION -o /app/publish \
+    /p:UseAppHost=false \
+    /p:DebugType=full \
+    /p:DebugSymbols=true \
+    --no-restore
 
 # Stage 4: Final runtime image
 FROM base AS final
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /app
+
+# Set environment variables useful for containerized .NET apps
+ENV DOTNET_RUNNING_IN_CONTAINER=true
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+
+# Copy the published app
 COPY --from=publish /app/publish .
+
+# Entry point
 ENTRYPOINT ["dotnet", "test.dll"]
