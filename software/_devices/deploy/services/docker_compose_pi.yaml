@@ -1,0 +1,27 @@
+services:
+    omnibot_portainer_pi:
+        restart: unless-stopped
+        image: portainer/portainer-ce:latest
+        container_name: omnibot_portainer_pi
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - /home/pi/omnibot/data/portainer/portainer-data:/data
+        ports:
+            - 9000:9000
+        networks:
+            - sbr_net_internal
+            - sbr_net_external
+
+
+networks:
+    omnibot_net_internal:
+        driver: bridge
+        internal: true
+
+    omnibot_net_external:
+        driver: bridge
+
+    omnibot_net_swarm:
+        driver: overlay
+        attachable: true

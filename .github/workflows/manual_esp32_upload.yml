@@ -1,4 +1,4 @@
-name: Manual ESP32 Upload
+name: Manual ESP32 Download
 
 on:
   workflow_dispatch:

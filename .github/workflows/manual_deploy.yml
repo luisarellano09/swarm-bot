@@ -1,0 +1,33 @@
+name: Manual Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Choose target system'
+        required: true
+        type: choice
+        options:
+          - pi
+          - nx
+
+jobs:
+  deploy_pi:
+    if: github.event.inputs.target == 'pi'
+    runs-on: [self-hosted, pi]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Docker Compose on Pi
+        run: docker compose -f software/_devices/deploy/services/docker_compose_pi.yml up --build -d
+
+  deploy_nx:
+    if: github.event.inputs.target == 'nx'
+    runs-on: [self-hosted, nx]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Docker Compose on NX
+        run: docker compose -f software/_devices/deploy/services/docker_compose_nx.yml up --build -d
