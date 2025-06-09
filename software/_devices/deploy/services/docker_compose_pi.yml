@@ -19,8 +19,7 @@ services:
         image: omnibot/omnibot_app:1.0
         container_name: omnibot_app
         build:
-            context: ../../../omnibot_app/
-            target: dev
+            context: ../../../omnibot_app/test/
         networks:
             - omnibot_net_internal
             - omnibot_net_external
