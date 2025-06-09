@@ -20,7 +20,7 @@ services:
         build:
             context: ../../../omnibot_app
             dockerfile: test/Dockerfile
-            arg:
+            args:
                 #BUILD_CONFIGURATION: Release
                 BUILD_CONFIGURATION: Debug
         ports:
