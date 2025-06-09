@@ -6,7 +6,7 @@ services:
     container_name: build_ota_esp32_manager
     network_mode: "host"
     volumes:
-      - ../../../../build_ota_esp32_manager/:/project
+      - ../../../../esp32_manager/:/project
     environment:
       ESP32_HOST: "10.0.0.20"
       ESP32_AUTH: ""
