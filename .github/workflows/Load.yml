@@ -7,7 +7,7 @@ on:
 
 jobs:
   detect_changes:
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, nx]
     outputs:
       changed_esp32_manager: ${{ steps.set_outputs.outputs.changed_esp32_manager }}  
       changed_esp32_node01: ${{ steps.set_outputs.outputs.changed_esp32_node01 }}
@@ -39,7 +39,7 @@ jobs:
   build_upload_es32_manager:
     needs: detect_changes
     if: needs.detect_changes.outputs.changed_esp32_manager == 'true'
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, nx]
     steps:
       - uses: actions/checkout@v3
       - name: Build & Upload esp32_manager
@@ -48,7 +48,7 @@ jobs:
   build_upload_esp32_node01:
     needs: detect_changes
     if: needs.detect_changes.outputs.changed_esp32_node01 == 'true'
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, nx]
     steps:
       - uses: actions/checkout@v3
       - name: Build & Upload esp32_node01
@@ -57,7 +57,7 @@ jobs:
   build_upload_esp32_node02:
     needs: detect_changes
     if: needs.detect_changes.outputs.changed_esp32_node02 == 'true'
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, nx]
     steps:
       - uses: actions/checkout@v3
       - name: Build & Upload esp32_node02
