@@ -1,0 +1,39 @@
+name: Manual ESP32 Upload
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Choose target ESP32 system'
+        required: true
+        type: choice
+        options:
+          - esp32_manager
+          - esp32_node01
+          - esp32_node02
+
+jobs:
+  upload_esp32:
+    runs-on: [self-hosted, nx]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set Docker Compose File Path
+        id: set-path
+        run: |
+          case "${{ github.event.inputs.target }}" in
+            esp32_manager)
+              echo "file=software/_devices/pi/deploy/downloadESP32/docker_compose_esp32_manager.yml" >> $GITHUB_OUTPUT
+              ;;
+            esp32_node01)
+              echo "file=software/_devices/pi/deploy/downloadESP32/docker_compose_esp32_node01.yml" >> $GITHUB_OUTPUT
+              ;;
+            esp32_node02)
+              echo "file=software/_devices/pi/deploy/downloadESP32/docker_compose_esp32_node02.yml" >> $GITHUB_OUTPUT
+              ;;
+          esac
+
+      - name: Run Docker Compose for selected ESP32
+        run: |
+          docker compose -f ${{ steps.set-path.outputs.file }} up --build --abort-on-container-exit
