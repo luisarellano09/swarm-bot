@@ -61,4 +61,4 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build & Upload esp32_node02
-        run: docker compose -f software/_devices/pi/deploy/downloadESP32/docker-compose_esp32_node02.yml up --build --abort-on-container-exit
+        run: docker compose -f software/_devices/pi/deploy/downloadESP32/docker_compose_esp32_node02.yml up --build --abort-on-container-exit
