@@ -20,20 +20,17 @@
 
 /**
  * @brief Init Mode
- * 
  */
 void InitModes();
 
 
 /**
  * @brief Set Mode Idle
- * 
  */
 void SetModeIdle();
 
 /**
  * @brief Set Mode Program
- * 
  */
 void SetModeProgram();
 
