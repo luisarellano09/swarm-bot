@@ -10,8 +10,8 @@ services:
         ports:
             - 9000:9000
         networks:
-            - sbr_net_internal
-            - sbr_net_external
+            - omnibot_net_internal
+            - omnibot_net_external
 
 
 networks:
