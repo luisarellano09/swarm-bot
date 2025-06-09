@@ -49,7 +49,7 @@ RC_e ExtNodeLinuxHandler(Request* request){
 
         case COM_REQUEST_REG_ID_e::MODE_MANAGER_PROGRAM_W: {
             Serial.println("Program Mode.....");
-            StartMode(Modes_e::Mode_Program);
+            SetModeProgram();
             Log.infoln("[NodeLinuxHandler::MODE_MANAGER_PROGRAM_W] Mode Program started");
             break;
         }

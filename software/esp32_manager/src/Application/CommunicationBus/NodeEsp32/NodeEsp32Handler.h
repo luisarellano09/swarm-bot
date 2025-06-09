@@ -49,7 +49,7 @@ RC_e ExtNodeEsp32Handler(Request* request){
 
         case COM_REQUEST_REG_ID_e::MODE_MANAGER_PROGRAM_W: {
             Serial.println("Program Mode.....");
-            StartMode(Modes_e::Mode_Program);
+            SetModeProgram();
             Log.infoln("[NodeEsp32Handler::ExtNodeEsp32Handler] Mode Program started");
             break;
         }

@@ -23,9 +23,9 @@ Manager::Manager(){
     Log.traceln("[Manager::Manager] WifiManager instanced");
 
     // Nodes Manager
-    this->m_nodeESP32 = new NodeEsp32(&Serial1, NODE_ESP32s_BAUDRATE, NODE_ESP32s_RX, NODE_ESP32s_TX);
+    this->m_nodeESP32 = new NodeEsp32(&Serial1, NODE_ESP32s_BAUDRATE, NODE_ESP32s_RX_GPIO, NODE_ESP32s_TX_GPIO);
     Log.traceln("[Manager::Manager] NodeEsp32 instanced");
-    this->m_nodeLinux = new NodeLinux(&Serial2, NODE_LINUX_BAUDRATE, NODE_LINUX_RX, NODE_LINUX_TX);
+    this->m_nodeLinux = new NodeLinux(&Serial2, NODE_LINUX_BAUDRATE, NODE_LINUX_RX_GPIO, NODE_LINUX_TX_GPIO);
     Log.traceln("[Manager::Manager] NodeLinux instanced");
 
     // Table RT

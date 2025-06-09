@@ -22,113 +22,33 @@
  *******************************************************************************************************************************************/
 
 void InitModes(){
-    Modes[Modes_e::Mode_Idle].Callback = SM_ModeIdle;
-    Modes[Modes_e::Mode_Program].Callback = SM_ModeProgram;
+    SetModeIdle();
+}
 
-    StartMode(Modes_e::Mode_Idle);
-    Log.traceln("[Modes::InitModes] Mode Idle started");
+//=====================================================================================================
+
+void SetModeIdle()
+{
+    vTaskSuspend(TaskOTAHandle);
+    vTaskSuspend(TaskGetValueCLIHandle);
+    vTaskResume(TaskCLIHandle);
+    vTaskResume(TaskNodeESP32Handle);
+    vTaskResume(TaskNodeLinuxHandle);
+
+    Log.infoln("[Modes::SetModeIdle] Mode set to Idle");
 }
 
 
 //=====================================================================================================
 
-void StartMode(Modes_e mode){
-    Modes[mode].status = 1;
-}
+void SetModeProgram()
+{
+    vTaskSuspend(TaskNodeESP32Handle);
+    vTaskSuspend(TaskNodeLinuxHandle);   
+    manager->m_wifiManager->Connect();
+    vTaskResume(TaskOTAHandle); 
 
-
-//=====================================================================================================
-
-void FinishModeTrigger(Modes_e mode){
-    Modes[mode].status = 0;
-}
-
-
-//=====================================================================================================
-
-void RunModes(){
-    for (int i=0;i<Modes_e::LENGTH_MODES;i++){
-        if (Modes[i].status == 1) {
-            Modes[i].Callback((Modes_e)i);
-        }
-    }
-}
-
-
-//=====================================================================================================
-
-void SM_ModeIdle(Modes_e mode){
-    
-    stateModeIdle = NextStateModeIdle;
-
-    switch(stateModeIdle){
-
-        case StateModeIdle_e::StateModeIdle_Idle:
-            NextStateModeIdle = StateModeIdle_e::StateModeIdle_DeactivateTasks;
-            break;
-
-        case StateModeIdle_e::StateModeIdle_DeactivateTasks:
-            vTaskSuspend(TaskOTAHandle);
-            vTaskSuspend(TaskGetValueCLIHandle);
-            NextStateModeIdle = StateModeIdle_e::StateModeIdle_ActivateTaskCLI;
-            break;
-
-        case StateModeIdle_e::StateModeIdle_ActivateTaskCLI:
-            vTaskResume(TaskCLIHandle);
-            NextStateModeIdle = StateModeIdle_e::StateModeIdle_ActivateTaskNodeESP32;
-            break;
-
-        case StateModeIdle_e::StateModeIdle_ActivateTaskNodeESP32:
-            vTaskResume(TaskNodeESP32Handle);
-            NextStateModeIdle = StateModeIdle_e::StateModeIdle_ActivateTaskNodeLinux;
-            break;
-
-        case StateModeIdle_e::StateModeIdle_ActivateTaskNodeLinux:
-            vTaskResume(TaskNodeLinuxHandle);
-            NextStateModeIdle = StateModeIdle_e::StateModeIdle_ChangeStatusToInactive;
-            break;
-
-        case StateModeIdle_e::StateModeIdle_ChangeStatusToInactive:
-            FinishModeTrigger(mode);
-            NextStateModeIdle = StateModeIdle_e::StateModeIdle_Idle;
-            break;
-    }
-}
-
-
-//=====================================================================================================
-
-void SM_ModeProgram(Modes_e mode){
-
-    stateModeProgram = NextStateModeProgram;
-
-    switch(stateModeProgram){
-
-        case StateModeProgram_e::StateModeProgram_Idle:
-            NextStateModeProgram = StateModeProgram_e::StateModeProgram_DeactivateTasks;
-            break;
-
-        case StateModeProgram_e::StateModeProgram_DeactivateTasks:
-            vTaskSuspend(TaskNodeESP32Handle);
-            vTaskSuspend(TaskNodeLinuxHandle);
-            NextStateModeProgram = StateModeProgram_e::StateModeProgram_ActivateWifi;
-            break;
-
-        case StateModeProgram_e::StateModeProgram_ActivateWifi:
-            manager->m_wifiManager->Connect();
-            NextStateModeProgram = StateModeProgram_e::StateModeProgram_ActivateTaskOTA;
-            break;
-
-        case StateModeProgram_e::StateModeProgram_ActivateTaskOTA:
-            vTaskResume(TaskOTAHandle);
-            NextStateModeProgram = StateModeProgram_e::StateModeProgram_ChangeStatusToInactive;
-            break;
-
-        case StateModeProgram_e::StateModeProgram_ChangeStatusToInactive:
-            FinishModeTrigger(mode);
-            NextStateModeProgram = StateModeProgram_e::StateModeProgram_Idle;
-            break;
-    }
+    Log.infoln("[Modes::SetModeProgram] Mode set to Program");
 }
 
 #endif // MODES_H

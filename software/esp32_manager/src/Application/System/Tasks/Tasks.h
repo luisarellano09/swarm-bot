@@ -45,7 +45,6 @@ void InitTasks(){
     xTaskCreatePinnedToCore(TaskOTA,            "TaskOTA",          5000,   NULL,   1,      &TaskOTAHandle,         0);
     xTaskCreatePinnedToCore(TaskNodeESP32,      "TaskNodeESP32",    10000,  NULL,   1,      &TaskNodeESP32Handle,   0);
     xTaskCreatePinnedToCore(TaskNodeLinux,      "TaskNodeLinux",    10000,  NULL,   1,      &TaskNodeLinuxHandle,   1);
-    xTaskCreatePinnedToCore(TaskModes,          "TaskModes",        10000,  NULL,   1,      &TaskModesHandle,       1);
 }
 
 
@@ -57,7 +56,6 @@ void MonitorTasks(){
     PrintTaskInfo(&TaskOTAHandle);
     PrintTaskInfo(&TaskNodeESP32Handle);
     PrintTaskInfo(&TaskNodeLinuxHandle);
-    PrintTaskInfo(&TaskModesHandle);
 }
 
 
@@ -122,14 +120,5 @@ void TaskNodeLinux(void *parameter){
     }
 }
 
-
-//=====================================================================================================
-
-void TaskModes(void *parameter){
-    while(true) {
-        RunModes();
-        vTaskDelay(TimerTaskModes);
-    }
-}
 
 #endif // TASKS_H
