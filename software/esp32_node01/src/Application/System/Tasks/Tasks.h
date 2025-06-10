@@ -48,7 +48,6 @@ void InitTasks(){
     xTaskCreatePinnedToCore(TaskNodeESP32,              "TaskNodeESP32",            10000,  NULL,   2,      &TaskNodeESP32Handle,               0);          
     xTaskCreatePinnedToCore(TaskOdometry,               "TaskOdometry",             2000,   NULL,   1,      &TaskOdometryHandle,                1); 
     xTaskCreatePinnedToCore(TaskMotionControl,          "TaskMotionControl",        2000,   NULL,   1,      &TaskMotionControlHandle,           1);         
-    xTaskCreatePinnedToCore(TaskModes,                  "TaskModes",                10000,  NULL,   1,      &TaskModesHandle,                   1);
     xTaskCreatePinnedToCore(TaskDatalog,                "TaskDatalog",              3000,   NULL,   1,      &TaskDatalogHandle,                 1);
     xTaskCreatePinnedToCore(TaskRegistersUpdateRT,      "TaskRegistersUpdateRT",    3000,   NULL,   1,      &TaskRegistersUpdateRTHandle,       1);
 }
@@ -63,7 +62,6 @@ void MonitorTasks(){
     PrintTaskInfo(&TaskNodeESP32Handle);
     PrintTaskInfo(&TaskOdometryHandle);
     PrintTaskInfo(&TaskMotionControlHandle);
-    PrintTaskInfo(&TaskModesHandle);
     PrintTaskInfo(&TaskDatalogHandle);
     PrintTaskInfo(&TaskRegistersUpdateRTHandle);
 }
@@ -139,16 +137,6 @@ void TaskMotionControl(void *parameter){
     while(true) {
         manager->m_motionControl->Run();
         vTaskDelay(TimerTaskMotionControl);
-    }
-}
-
-
-//=====================================================================================================
-
-void TaskModes(void *parameter){
-    while(true) {
-        RunModes();
-        vTaskDelay(TimerTaskModes);
     }
 }
 

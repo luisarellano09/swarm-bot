@@ -22,12 +22,12 @@
  *******************************************************************************************************************************************/
 
 void InitModes(){
-    SetModeIdle();
+    SetModeInit();
 }
 
 //=====================================================================================================
 
-void SetModeIdle()
+void SetModeInit()
 {
     vTaskSuspend(TaskOTAHandle);
     vTaskSuspend(TaskGetValueCLIHandle);

@@ -29,14 +29,14 @@
  * @brief Init 
  * 
  */
-void Init();
+void InitMain();
 
 
 /*******************************************************************************************************************************************
  *  												DEFINITIONS
  *******************************************************************************************************************************************/
 
-void Init(){
+void InitMain(){
 
     // Disable brownout detector
     WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0); 
@@ -65,16 +65,15 @@ void Init(){
     // Init CLI
     InitCLI();
 
+    // Init Tasks
+    InitTasks();
+
     // Init Modes
     InitModes();
 
     // Init Datalog
-    InitDatalog();
-    ActivateDataset(Datasets_e::DATASET_MOTION_CONTROL);
-
-    // Start Motion
-    StartMode(Modes_e::Mode_Motion);
-    
+    // InitDatalog();
+    // ActivateDataset(Datasets_e::DATASET_MOTION_CONTROL);   
 }
 
 

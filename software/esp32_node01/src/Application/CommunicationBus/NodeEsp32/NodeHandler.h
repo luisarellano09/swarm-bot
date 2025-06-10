@@ -48,7 +48,7 @@ RC_e ExtHandler(Request* request){
         
         case COM_REQUEST_REG_ID_e::MODE_NODE1_PROGRAM_W: {
             Serial.println("Program Mode.....");
-            StartMode(Modes_e::Mode_Program);
+            SetModeProgram();
             Log.infoln("[NodeHandler::MODE_NODE1_PROGRAM_W] Mode Program started");
             break;
         }
@@ -280,7 +280,6 @@ RC_e UpdateRegistersRT(){
     RC_e retCode = RC_e::SUCCESS;
 
     if (manager->m_nodeESP32->GetError() == false) {
-        manager->m_nodeESP32->UpdateRegister(COM_REQUEST_REG_ID_e::MODE_NODE1_MODE_R, currentMode);
         // manager->m_nodeESP32->UpdateRegister(COM_REQUEST_REG_ID_e::LIVE_MOTOR_LEFT_SPEED_R, manager->m_motor01->GetSpeed() * 100);
         // manager->m_nodeESP32->UpdateRegister(COM_REQUEST_REG_ID_e::LIVE_MOTOR_RIGHT_SPEED_R, manager->m_motor02->GetSpeed() * 100);
         // manager->m_nodeESP32->UpdateRegister(COM_REQUEST_REG_ID_e::LIVE_ENCODER_LEFT_COUNT_R, manager->m_encoder01->GetCount());

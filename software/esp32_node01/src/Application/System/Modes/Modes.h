@@ -22,153 +22,46 @@
  *  												DEFINITION FUNCTIONS
  *******************************************************************************************************************************************/
 
-void InitModes(){
-    Modes[Modes_e::Mode_Idle].Callback = SM_ModeIdle;
-    Modes[Modes_e::Mode_Program].Callback = SM_ModeProgram;
-    Modes[Modes_e::Mode_Motion].Callback = SM_ModeMotion;
-
-    StartMode(Modes_e::Mode_Idle);
-    Log.traceln("[Modes::InitModes] Mode Idle started");
+void InitModes()
+{
+    SetModeInit();
 }
 
 
 //=====================================================================================================
 
-void StartMode(Modes_e mode){
-    Modes[mode].status = 1;
+void SetModeInit()
+{
+    vTaskSuspend(TaskOTAHandle);
+    vTaskSuspend(TaskGetValueCLIHandle);
+    vTaskSuspend(TaskMotionControlHandle);
+    vTaskSuspend(TaskDatalogHandle);
+    vTaskResume(TaskOdometryHandle);
+    vTaskResume(TaskCLIHandle);
+    vTaskResume(TaskNodeESP32Handle);
+    vTaskResume(TaskRegistersUpdateRTHandle);
+    vTaskResume(TaskMotionControlHandle);
+    manager->m_motionControl->Stop();
 }
 
 
 //=====================================================================================================
 
-void FinishModeTrigger(Modes_e mode){
-    Modes[mode].status = 0;
+void SetModeProgram()
+{
+    vTaskSuspend(TaskNodeESP32Handle);
+    vTaskSuspend(TaskRegistersUpdateRTHandle);
+    vTaskSuspend(TaskDatalogHandle);
+    vTaskSuspend(TaskOdometryHandle);
+    manager->m_motionControl->Stop();
+    vTaskSuspend(TaskMotionControlHandle);
+    manager->m_motor01->Stop();
+    manager->m_motor02->Stop();
+    manager->m_motor03->Stop();
+    manager->m_motor04->Stop();    
+    manager->m_wifiManager->Connect();
+    vTaskResume(TaskOTAHandle);
 }
 
-
-//=====================================================================================================
-
-void RunModes(){
-    for (int i=0;i<Modes_e::LENGTH_MODES;i++){
-        if (Modes[i].status == 1) {
-            Modes[i].Callback((Modes_e)i);
-        }
-    }
-}
-
-
-//=====================================================================================================
-
-void SM_ModeIdle(Modes_e mode){
-    
-    stateModeIdle = NextStateModeIdle;
-
-    switch(stateModeIdle){
-
-        case StateModeIdle_e::StateModeIdle_Idle:
-            NextStateModeIdle = StateModeIdle_e::StateModeIdle_DeactivateTasks;
-            break;
-
-        case StateModeIdle_e::StateModeIdle_DeactivateTasks:
-            vTaskSuspend(TaskOTAHandle);
-            vTaskSuspend(TaskGetValueCLIHandle);
-            vTaskSuspend(TaskMotionControlHandle);
-            vTaskSuspend(TaskDatalogHandle);
-            NextStateModeIdle = StateModeIdle_e::StateModeIdle_ActivateTaskCLI;
-            break;
-
-        case StateModeIdle_e::StateModeIdle_ActivateTaskCLI:
-            vTaskResume(TaskCLIHandle);
-            NextStateModeIdle = StateModeIdle_e::StateModeIdle_ActivateTaskNodeESP32;
-            break;
-
-        case StateModeIdle_e::StateModeIdle_ActivateTaskNodeESP32:
-            vTaskResume(TaskNodeESP32Handle);
-            vTaskResume(TaskRegistersUpdateRTHandle);
-            currentMode = Modes_e::Mode_Idle;
-            NextStateModeIdle = StateModeIdle_e::StateModeIdle_ChangeStatusToInactive;
-            break;
-
-        case StateModeIdle_e::StateModeIdle_ChangeStatusToInactive:
-            FinishModeTrigger(mode);
-            NextStateModeIdle = StateModeIdle_e::StateModeIdle_Idle;
-            break;
-    }
-}
-
-
-//=====================================================================================================
-
-void SM_ModeProgram(Modes_e mode){
-
-    stateModeProgram = NextStateModeProgram;
-
-    switch(stateModeProgram){
-
-        case StateModeProgram_e::StateModeProgram_Idle:
-            NextStateModeProgram = StateModeProgram_e::StateModeProgram_DeactivateTasks;
-            break;
-
-        case StateModeProgram_e::StateModeProgram_DeactivateTasks:
-            vTaskSuspend(TaskNodeESP32Handle);
-            vTaskSuspend(TaskRegistersUpdateRTHandle);
-            vTaskSuspend(TaskOdometryHandle);
-            vTaskSuspend(TaskMotionControlHandle);
-            vTaskSuspend(TaskDatalogHandle);
-            manager->m_motor01->Stop();
-            manager->m_motor02->Stop();
-            manager->m_motor03->Stop();
-            manager->m_motor04->Stop();
-            NextStateModeProgram = StateModeProgram_e::StateModeProgram_ActivateWifi;
-            break;
-
-        case StateModeProgram_e::StateModeProgram_ActivateWifi:
-            manager->m_wifiManager->Connect();
-            NextStateModeProgram = StateModeProgram_e::StateModeProgram_ActivateTaskOTA;
-            break;
-
-        case StateModeProgram_e::StateModeProgram_ActivateTaskOTA:
-            vTaskResume(TaskOTAHandle);
-            currentMode = Modes_e::Mode_Program;
-            NextStateModeProgram = StateModeProgram_e::StateModeProgram_ChangeStatusToInactive;
-            break;
-
-        case StateModeProgram_e::StateModeProgram_ChangeStatusToInactive:
-            FinishModeTrigger(mode);
-            NextStateModeProgram = StateModeProgram_e::StateModeProgram_Idle;
-            break;
-    }
-}
-
-
-//=====================================================================================================
-
-void SM_ModeMotion(Modes_e mode){
-
-    stateModeMotion = NextStateModeMotion;
-
-    switch(stateModeMotion){
-
-        case StateModeMotion_e::StateModeMotion_Idle:
-            NextStateModeMotion = StateModeMotion_e::StateModeMotion_ActivateTaskOdometry;
-            break;
-
-        case StateModeMotion_e::StateModeMotion_ActivateTaskOdometry:
-            vTaskResume(TaskOdometryHandle);
-            NextStateModeMotion = StateModeMotion_e::StateModeMotion_ActivateTaskMotionControl;
-            break;
-
-        case StateModeMotion_e::StateModeMotion_ActivateTaskMotionControl:
-            vTaskResume(TaskMotionControlHandle);
-            currentMode = Modes_e::Mode_Motion;
-            NextStateModeMotion = StateModeMotion_e::StateModeMotion_ChangeStatusToInactive;
-            break;
-
-        case StateModeMotion_e::StateModeMotion_ChangeStatusToInactive:
-            FinishModeTrigger(mode);
-            NextStateModeMotion = StateModeMotion_e::StateModeMotion_Idle;
-            break;
-    }
-}
 
 #endif // MODES_H

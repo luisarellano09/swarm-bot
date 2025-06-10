@@ -571,7 +571,7 @@ void F_CLI_Modes_Restart(){
 
 void F_CLI_Modes_Program(){
     Serial.println("Program Mode.....");
-    StartMode(Modes_e::Mode_Program);
+    SetModeProgram();
     Log.traceln("[CLI::F_CLI_Modes_Program] Mode Program started");
 }
 
@@ -579,9 +579,9 @@ void F_CLI_Modes_Program(){
 //=====================================================================================================
 
 void F_CLI_Modes_Motion(){
-    Serial.println("Motion Mode.....");
-    StartMode(Modes_e::Mode_Motion);
-    Log.traceln("[CLI::F_CLI_Modes_Program] Mode Motion started");
+    Serial.println("Init Mode.....");
+    SetModeInit();
+    Log.traceln("[CLI::F_CLI_Modes_Program] Mode Init started");
 }
 
 

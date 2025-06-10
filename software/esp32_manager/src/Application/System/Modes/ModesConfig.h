@@ -23,18 +23,15 @@
  */
 void InitModes();
 
-
 /**
- * @brief Set Mode Idle
+ * @brief Set Mode Init
  */
-void SetModeIdle();
+void SetModeInit();
 
 /**
  * @brief Set Mode Program
  */
 void SetModeProgram();
-
-
 
 //=====================================================================================================
 
